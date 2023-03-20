@@ -15,8 +15,10 @@
 
       rows.forEach((row, index) => {
         row.tabIndex = 0;
-        row.addEventListener('click', function() {
-          handleClick(row);
+        row.addEventListener('click', function(event) {
+          if (event.target.tagName !== 'A' && event.target.tagName !== 'BUTTON') {
+            handleClick(row);
+          }
         });
         row.addEventListener('keydown', function(event) {
           if (event.key === 'Enter' || event.key === ' ') {
@@ -39,20 +41,24 @@
       <tr>
         <th>Nazwa</th>
         <th>Wartość</th>
+        <th>Akcja</th>
       </tr>
     </thead>
     <tbody>
       <tr>
         <td>Element 1</td>
         <td>100</td>
+        <td></td>
       </tr>
       <tr>
         <td>Element 2</td>
         <td>200</td>
+        <td><a href="https://example.com" target="_blank" rel="noopener noreferrer">Przejdź do strony</a></td>
       </tr>
       <tr>
         <td>Element 3</td>
         <td>300</td>
+        <td><button type="button" onclick="alert('Przycisk został kliknięty!');">Kliknij mnie</button></td>
       </tr>
     </tbody>
   </table>
