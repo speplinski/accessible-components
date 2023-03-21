@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Przykład formularza zgodnego z WCAG 2.1</title>
+    <style>
+        /* Style dla obszaru klikalnego przycisków radio */
+        .radio-container {
+            display: flex;
+            align-items: center;
+            min-height: 48px;
+            cursor: pointer;
+            margin-bottom: 10px;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px; /* dodano zaokrąglenie narożników ramki */
+        }
+
+        .radio-container:focus-within {
+            border-color: #007bff; /* kolor ramki podczas fokusowania */
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25); /* cień wokół ramki podczas fokusowania */
+        }
+        
+        .radio-container input[type="radio"] {
+            margin-right: 10px;
+        }
+    
+
+        /* Style dla ukrywania dodatkowego opisu */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            border: 0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Przykład formularza zgodnego z WCAG 2.1</h1>
+    </header>
+    <main>
+        <form>
+            <fieldset>
+                <legend>Wybierz opcję:</legend>
+                <div class="radio-container">
+                    <input type="radio" id="opcja1" name="opcja" value="opcja1" aria-describedby="opisOpcja1">
+                    <label for="opcja1">Opcja 1</label>
+                    <span id="opisOpcja1" class="sr-only">(opis dla opcji 1)</span>
+                </div>
+                <div class="radio-container">
+                    <input type="radio" id="opcja2" name="opcja" value="opcja2" aria-describedby="opisOpcja2">
+                    <label for="opcja2">Opcja 2</label>
+                    <span id="opisOpcja2" class="sr-only">(opis dla opcji 2)</span>
+                </div>
+            </fieldset>
+            <button type="submit">Wyślij</button>
+        </form>
+    </main>
+</body>
+</html>
