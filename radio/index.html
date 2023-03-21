@@ -14,19 +14,24 @@
             margin-bottom: 10px;
             padding: 5px;
             border: 1px solid #ccc;
-            border-radius: 5px; /* dodano zaokrąglenie narożników ramki */
+            border-radius: 5px;
         }
 
-        .radio-container:focus-within {
-            border-color: #007bff; /* kolor ramki podczas fokusowania */
+        .radio-container.active {
+            border-color: #007bff;
             outline: none;
-            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25); /* cień wokół ramki podczas fokusowania */
+            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
         }
-        
+
+        /* Style dla wybranego elementu radio */
+        .radio-container input[type="radio"]:checked ~ label {
+            font-weight: bold;
+            color: #007bff;
+        }
+
         .radio-container input[type="radio"] {
             margin-right: 10px;
         }
-    
 
         /* Style dla ukrywania dodatkowego opisu */
         .sr-only {
@@ -49,12 +54,12 @@
         <form>
             <fieldset>
                 <legend>Wybierz opcję:</legend>
-                <div class="radio-container">
+                <div class="radio-container" onclick="setActive(this)">
                     <input type="radio" id="opcja1" name="opcja" value="opcja1" aria-describedby="opisOpcja1">
                     <label for="opcja1">Opcja 1</label>
                     <span id="opisOpcja1" class="sr-only">(opis dla opcji 1)</span>
                 </div>
-                <div class="radio-container">
+                <div class="radio-container" onclick="setActive(this)">
                     <input type="radio" id="opcja2" name="opcja" value="opcja2" aria-describedby="opisOpcja2">
                     <label for="opcja2">Opcja 2</label>
                     <span id="opisOpcja2" class="sr-only">(opis dla opcji 2)</span>
@@ -63,5 +68,15 @@
             <button type="submit">Wyślij</button>
         </form>
     </main>
+    <script>
+        function setActive(element) {
+            const radioContainers = document.querySelectorAll('.radio-container');
+            radioContainers.forEach(container => container.classList.remove('active'));
+            element.classList.add('active');
+
+            const radioButton = element.querySelector('input[type="radio"]');
+            radioButton.checked = true;
+        }
+    </script>
 </body>
 </html>
