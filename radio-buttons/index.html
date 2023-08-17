@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Radio Buttons - WCAG 2.2 compliant</title>
+    <style>
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        li {
+            list-style-type: none;
+            border: 1px solid #696969;
+            border-radius: 8px;
+            position: relative;
+            margin: 0 0 16px;
+            padding: 8px 16px;
+        }
+
+        input[type="radio"] {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            margin: 0;
+            position: absolute;
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        li:hover {
+            background-color: #f0f0f0;
+        }
+
+        li:focus-within {
+            outline: 2px solid #FF6200;
+        }
+
+        i {
+            display: block;
+            width: 32px;
+            height: 32px;
+            background-color: #FF6200;
+            margin-top: 8px;
+            margin-bottom: 8px;
+        }
+
+        .title {
+            display: flex;
+            align-items: center;
+        }
+
+        .icon-text {
+            margin-left: 16px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            margin-right: 16px;
+        }
+
+        fieldset {
+            border: none;
+            font-size: 16px;
+            font-weight: normal;
+        }
+        
+        legend h2 {
+            font-size: 19px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<fieldset>
+    <legend><h2 id="legend_title">Please select</h2></legend>
+    <form id="myForm" action="next-step.html" method="post">
+        <ul>
+            <li><input aria-labelledby="option1_label" id="option1" name="options" type="radio" value="option1">
+                <label for="option1" id="option1_label">
+                    <span class="title">
+                        <i class="icon1"></i>
+                        <span class="icon-text">
+                            <span class="line1">Option 1</span>
+                            <span class="line2">Option 1 description</span>
+                        </span>
+                    </span>
+                </label>
+            </li>
+            <li><input aria-labelledby="option2_label" id="option2" name="options" type="radio" value="option2">
+                <label for="option2" id="option2_label">
+                    <span class="title">
+                        <i class="icon2"></i>
+                        <span class="icon-text">
+                            <span class="line1">Option 2</span>
+                            <span class="line2">Option 2 description</span>
+                        </span>
+                    </span>
+                </label>
+            </li>
+        </ul>
+    </form>
+</fieldset>
+
+<script>
+    const form = document.getElementById('myForm');
+    const options = form.elements['options'];
+
+    let clickedByKeyboard = false;
+
+    options.forEach((option, index) => {
+
+        option.addEventListener('keydown', event => {
+            clickedByKeyboard = true;
+            if (event.key === 'Enter') {
+                options[index].checked = true;
+                //form.submit();
+                alert("Next step");
+            }
+        });
+
+        option.addEventListener('click', () => {
+            if (!clickedByKeyboard) {
+                options[index].checked = true;
+                //form.submit();
+                alert("Next step");
+            }
+            clickedByKeyboard = false;
+        });
+    });
+</script>
+
+</body>
+</html>
