@@ -13,7 +13,7 @@
 
         li {
             list-style-type: none;
-            border: 1px solid #696969;
+            border: 1px solid #A8A8A8;
             border-radius: 8px;
             position: relative;
             margin: 0 0 16px;
@@ -31,18 +31,28 @@
             height: 0;
         }
 
+        input[type="radio"]:checked {
+            border: 2px solid red;
+        }
+
         li:hover {
-            background-color: #f0f0f0;
+            background-color: #D9D9D9;
+        }
+
+        li:active {
+            background-color: #F0F0F0;
         }
 
         li:focus-within {
-            outline: 2px solid #FF6200;
+            border: 1px solid #559BD1;
+            box-shadow: 0 0 8px 0 #9FCAEA;
         }
 
         i {
             display: block;
             width: 32px;
             height: 32px;
+            border-radius: 8px;
             background-color: #FF6200;
             margin-top: 8px;
             margin-bottom: 8px;
@@ -63,11 +73,13 @@
 
         fieldset {
             border: none;
+            color: #333333;
             font-size: 16px;
             font-weight: normal;
         }
-        
+
         legend h2 {
+            color: #333333;
             font-size: 19px;
             font-weight: bold;
         }
