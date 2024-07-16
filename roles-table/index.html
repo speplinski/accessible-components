@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Porównanie ról użytkowników przykład zgodny z WCAG 2.1 AA</title>
+  <style>
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    th, td {
+      border: 1px solid #000;
+      padding: 8px;
+      text-align: left;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+    .hidden {
+      display: none;
+    }
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      border: 0;
+    }
+
+    th select {
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+<header>
+  <h1>Porównanie ról użytkowników w systemie</h1>
+</header>
+<main>
+  <section aria-labelledby="role-comparison-section">
+    <table aria-labelledby="role-comparison-section">
+      <thead>
+      <tr>
+        <th scope="col">
+          <label for="role1-select" class="sr-only">Rola 1</label>
+          <select id="role1-select" onchange="updateTable()">
+            <option value="owner" selected>Właściciel(ka)</option>
+            <option value="cfo">Dyrektor(ka) finansowy(a)</option>
+            <option value="accountant">Księgowy(a)</option>
+            <option value="assistant">Asystent(ka)</option>
+          </select>
+        </th>
+        <th scope="col">
+          <label for="role2-select" class="sr-only">Rola 2</label>
+          <select id="role2-select" onchange="updateTable()">
+            <option value="owner">Właściciel(ka)</option>
+            <option value="cfo" selected>Dyrektor(ka) finansowy(a)</option>
+            <option value="accountant">Księgowy(a)</option>
+            <option value="assistant">Asystent(ka)</option>
+          </select>
+        </th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td colspan="2">
+          <h2>Rachunki i przelewy</h2>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <h3 id="podglad-rachunkow" aria-describedby="rachunki-description">Podgląd rachunków</h3>
+          <p id="rachunki-description">Podgląd rachunków i ich historii, pobieranie plików PDF transakcji, generowanie wyciągów i raportów.</p>
+        </td>
+      </tr>
+      <tr>
+        <td data-role="owner" aria-describedby="podglad-rachunkow">Pełny dostęp</td>
+        <td data-role="assistant" aria-describedby="podglad-rachunkow">Brak dostępu</td>
+      </tr>
+      <tr class="hidden">
+        <td data-role="cfo" aria-describedby="podglad-rachunkow">Pełny dostęp</td>
+        <td data-role="assistant" aria-describedby="podglad-rachunkow">Brak dostępu</td>
+      </tr>
+      <tr class="hidden">
+        <td data-role="accountant" aria-describedby="podglad-rachunkow">Pełny dostęp</td>
+        <td data-role="assistant" aria-describedby="podglad-rachunkow">Brak dostępu</td>
+      </tr>
+      <tr class="hidden">
+        <td data-role="cfo" aria-describedby="podglad-rachunkow">Pełny dostęp</td>
+        <td data-role="owner" aria-describedby="podglad-rachunkow">Pełny dostęp</td>
+      </tr>
+      <tr class="hidden">
+        <td data-role="accountant" aria-describedby="podglad-rachunkow">Pełny dostęp</td>
+        <td data-role="owner" aria-describedby="podglad-rachunkow">Pełny dostęp</td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <h3 id="przygotowywanie-przelewow" aria-describedby="przygotowywanie-przelewow-description">Przygotowywanie przelewów</h3>
+          <p id="przygotowywanie-przelewow-description">Podgląd faktur firmy, tworzenie każdego typu przelewu,
+            ręcznie i za pomocą importu, do kontrahentów nowych i zapisanych, w przeglądarce i w aplikacji mobilnej.</p>
+        </td>
+      </tr>
+      <tr>
+        <td data-role="owner" aria-describedby="podglad-rachunkow">Pełny dostęp</td>
+        <td data-role="assistant" aria-describedby="podglad-rachunkow">Brak dostępu</td>
+      </tr>
+      <tr class="hidden">
+        <td data-role="cfo" aria-describedby="podglad-rachunkow">Pełny dostęp</td>
+        <td data-role="assistant" aria-describedby="podglad-rachunkow">Brak dostępu</td>
+      </tr>
+      <tr class="hidden">
+        <td data-role="accountant" aria-describedby="podglad-rachunkow">Pełny dostęp</td>
+        <td data-role="assistant" aria-describedby="podglad-rachunkow">Brak dostępu</td>
+      </tr>
+      <tr class="hidden">
+        <td data-role="cfo" aria-describedby="podglad-rachunkow">Pełny dostęp</td>
+        <td data-role="owner" aria-describedby="podglad-rachunkow">Pełny dostęp</td>
+      </tr>
+      <tr class="hidden">
+        <td data-role="accountant" aria-describedby="podglad-rachunkow">Pełny dostęp</td>
+        <td data-role="owner" aria-describedby="podglad-rachunkow">Pełny dostęp</td>
+      </tr>
+      <!-- Dodaj więcej wierszy zgodnie z potrzebami -->
+      <tr>
+        <td colspan="2">
+          <h2>Depozyty i rozliczenia</h2>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <h3 id="podglad-rachunkow-depozytowych" aria-describedby="rachunki-depozytowych-description">Podgląd produktów depozytowych</h3>
+          <p id="rachunki-depozytowych-description">Podgląd np. kart, lokat, wpłat i wypłat gotówkowych, poleceń zapłaty.
+            Podgląd ich historii transakcji, pobieranie plików PDF, generowanie raportów.</p>
+        </td>
+      </tr>
+      <tr>
+        <td data-role="owner" aria-describedby="podglad-rachunkow">Pełny dostęp</td>
+        <td data-role="assistant" aria-describedby="podglad-rachunkow">Brak dostępu</td>
+      </tr>
+      <tr class="hidden">
+        <td data-role="cfo" aria-describedby="podglad-rachunkow">Pełny dostęp</td>
+        <td data-role="assistant" aria-describedby="podglad-rachunkow">Brak dostępu</td>
+      </tr>
+      <tr class="hidden">
+        <td data-role="accountant" aria-describedby="podglad-rachunkow">Pełny dostęp</td>
+        <td data-role="assistant" aria-describedby="podglad-rachunkow">Brak dostępu</td>
+      </tr>
+      <tr class="hidden">
+        <td data-role="cfo" aria-describedby="podglad-rachunkow">Pełny dostęp</td>
+        <td data-role="owner" aria-describedby="podglad-rachunkow">Pełny dostęp</td>
+      </tr>
+      <tr class="hidden">
+        <td data-role="accountant" aria-describedby="podglad-rachunkow">Pełny dostęp</td>
+        <td data-role="owner" aria-describedby="podglad-rachunkow">Pełny dostęp</td>
+      </tr>
+      <!-- Dodaj więcej wierszy zgodnie z potrzebami -->
+      </tbody>
+    </table>
+  </section>
+</main>
+<script>
+  function updateTable() {
+    const selectedRole1 = document.getElementById('role1-select').value;
+    const selectedRole2 = document.getElementById('role2-select').value;
+
+    document.querySelectorAll('tbody tr').forEach(row => {
+      const cells = row.querySelectorAll('td');
+      if (cells.length === 2) {
+        if ((cells[0].dataset.role === selectedRole1 && cells[1].dataset.role === selectedRole2) ||
+          (cells[0].dataset.role === selectedRole2 && cells[1].dataset.role === selectedRole1)) {
+          row.classList.remove('hidden');
+        } else {
+          row.classList.add('hidden');
+        }
+      }
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    updateTable();
+  });
+</script>
+</body>
+</html>
