@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wyszukiwanie nazw firm</title>
+    <style>
+        .autocomplete-container {
+            position: relative;
+            width: 300px;
+        }
+
+        #autocomplete-textarea {
+            width: 100%;
+            resize: none;
+            overflow: hidden;
+            line-height: 1.5;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+
+        .autocomplete-items {
+            position: absolute;
+            border: 1px solid #d4d4d4;
+            border-top: none;
+            z-index: 99;
+            top: 100%;
+            left: 0;
+            right: 0;
+            padding: 0;
+            margin: 0;
+            max-height: 200px;
+            overflow-y: auto;
+            background-color: white;
+        }
+
+        .autocomplete-items li {
+            padding: 10px;
+            cursor: pointer;
+            background-color: #fff;
+            border-bottom: 1px solid #d4d4d4;
+            list-style-type: none;
+        }
+
+        .autocomplete-items li:hover,
+        .autocomplete-items li:focus {
+            background-color: #e9e9e9;
+        }
+
+        .autocomplete-active {
+            background-color: #e9e9e9 !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="autocomplete-container">
+        <label for="autocomplete-textarea">Wyszukaj nazwę firmy:</label>
+        <textarea id="autocomplete-textarea" rows="1" aria-autocomplete="list" aria-controls="autocomplete-list" aria-live="polite"></textarea>
+        <ul id="autocomplete-list" role="listbox" class="autocomplete-items"></ul>
+    </div>
+
+    <script>
+        const textarea = document.getElementById('autocomplete-textarea');
+        const autocompleteList = document.getElementById('autocomplete-list');
+        const suggestions = [
+            "Międzynarodowe Centrum Innowacyjnych Technologii i Rozwoju Społecznego Sp. z o.o.",
+            "Ogólnopolskie Stowarzyszenie Producentów i Dystrybutorów Energii Odnawialnej",
+            "Wielkopolskie Przedsiębiorstwo Przetwórstwa Owocowo-Warzywnego i Logistyki S.A.",
+            "Pomorska Grupa Badawczo-Rozwojowa ds. Zrównoważonego Rozwoju i Ekologii Morskiej",
+            "Dolnośląskie Konsorcjum Producentów Maszyn i Urządzeń Przemysłowych Sp. z o.o.",
+            "Małopolska Agencja Wspierania Przedsiębiorczości i Innowacji Technologicznych S.A.",
+            "Podkarpackie Centrum Doradztwa i Szkoleń w Zakresie Zarządzania Projektami Unijnymi",
+            "Śląski Instytut Badań nad Sztuczną Inteligencją i Automatyzacją Procesów Przemysłowych",
+            "Lubuskie Stowarzyszenie Producentów Ekologicznej Żywności i Kosmetyków Naturalnych",
+            "Zachodniopomorskie Centrum Transferu Wiedzy i Technologii w Przemyśle Stoczniowym",
+            "Łódzki Klaster Innowacyjnych Rozwiązań w Dziedzinie Biotechnologii i Medycyny",
+            "Kujawsko-Pomorskie Towarzystwo Wspierania Rozwoju Małych i Średnich Przedsiębiorstw",
+            "Mazowiecka Platforma Współpracy Nauki i Biznesu w Sektorze Nowoczesnych Technologii",
+            "Świętokrzyskie Centrum Badań i Rozwoju Technologii Informacyjno-Komunikacyjnych",
+            "Warmińsko-Mazurski Inkubator Przedsiębiorczości i Innowacji w Sektorze Rolno-Spożywczym"
+        ];
+
+        let currentFocus = -1;
+
+        textarea.addEventListener('input', function(e) {
+            const val = this.value;
+            closeAllLists();
+            if (!val) return false;
+            
+            suggestions.forEach((suggestion, index) => {
+                if (suggestion.toUpperCase().includes(val.toUpperCase())) {
+                    const li = document.createElement('li');
+                    const matchIndex = suggestion.toUpperCase().indexOf(val.toUpperCase());
+                    li.innerHTML = suggestion.substring(0, matchIndex) +
+                                   `<strong>${suggestion.substr(matchIndex, val.length)}</strong>` +
+                                   suggestion.substring(matchIndex + val.length);
+                    li.setAttribute('role', 'option');
+                    li.setAttribute('id', `autocomplete-item-${index}`);
+                    li.addEventListener('click', function(e) {
+                        textarea.value = suggestion;
+                        closeAllLists();
+                        autoResize(); // adjust height after selection
+                    });
+                    autocompleteList.appendChild(li);
+                }
+            });
+        });
+
+        textarea.addEventListener('keydown', function(e) {
+            let items = autocompleteList.getElementsByTagName('li');
+            if (e.keyCode === 40) { // strzałka w dół
+                currentFocus++;
+                if (currentFocus >= items.length) currentFocus = items.length - 1;
+                addActive(items);
+                e.preventDefault(); // prevent the cursor from moving
+            } else if (e.keyCode === 38) { // strzałka w górę
+                currentFocus--;
+                if (currentFocus < 0) currentFocus = 0;
+                addActive(items);
+                e.preventDefault(); // prevent the cursor from moving
+            } else if (e.keyCode === 13) { // enter
+                e.preventDefault();
+                if (currentFocus > -1) {
+                    if (items) items[currentFocus].click();
+                }
+            } else if (e.keyCode === 27) { // escape
+                closeAllLists();
+            }
+        });
+
+        function addActive(items) {
+            if (!items) return false;
+            removeActive(items);
+            if (currentFocus >= items.length) currentFocus = items.length - 1;
+            if (currentFocus < 0) currentFocus = 0;
+            items[currentFocus].classList.add('autocomplete-active');
+            items[currentFocus].setAttribute('aria-selected', 'true');
+            textarea.setAttribute('aria-activedescendant', items[currentFocus].id);
+            items[currentFocus].scrollIntoView({block: 'nearest'}); // ensure the active item is visible
+        }
+
+        function removeActive(items) {
+            for (let i = 0; i < items.length; i++) {
+                items[i].classList.remove('autocomplete-active');
+                items[i].removeAttribute('aria-selected');
+            }
+        }
+
+        function closeAllLists() {
+            autocompleteList.innerHTML = '';
+            currentFocus = -1;
+            textarea.removeAttribute('aria-activedescendant');
+        }
+
+        function autoResize() {
+            textarea.style.height = 'auto';
+            textarea.style.height = textarea.scrollHeight + 'px';
+        }
+
+        textarea.addEventListener('input', autoResize);
+        document.addEventListener('click', function(e) {
+            if (e.target !== textarea) {
+                closeAllLists();
+            }
+        });
+    </script>
+</body>
+</html>
