@@ -10,8 +10,19 @@
             width: 300px;
         }
 
+        .search-icon {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            pointer-events: none;
+            font-size: 16px;
+            color: #aaa;
+        }
+
         #autocomplete-textarea {
             width: 100%;
+            padding-left: 30px;
             resize: none;
             overflow: hidden;
             line-height: 1.5;
@@ -55,7 +66,8 @@
 <body>
     <div class="autocomplete-container">
         <label for="autocomplete-textarea">Wyszukaj nazwę firmy:</label>
-        <textarea id="autocomplete-textarea" rows="1" aria-autocomplete="list" aria-controls="autocomplete-list" aria-live="polite"></textarea>
+        <span class="search-icon">🔍</span>
+        <textarea id="autocomplete-textarea" rows="1" placeholder="Wyszukaj nazwę firmy..." aria-autocomplete="list" aria-controls="autocomplete-list" aria-live="polite"></textarea>
         <ul id="autocomplete-list" role="listbox" class="autocomplete-items"></ul>
     </div>
 
